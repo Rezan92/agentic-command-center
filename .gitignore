@@ -1,21 +1,6 @@
-# Dependencies
-node_modules/
-.pnp
-.pnp.js
-
-# Environment Variables
+node_modules
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Build outputs
-dist/
-build/
-.next/
-out/
-
-# OS files
 .DS_Store
-Thumbs.db
+dist
+build
+.next
