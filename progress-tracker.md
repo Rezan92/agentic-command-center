@@ -13,8 +13,8 @@
 ## **Epic 2: Frontend Shell & Real-Time Comms**
 - [x] **Story 2.1: Initialize Next.js & UI Library**
 - [x] **Story 2.2: Build the Chat Interface UI**
-- [ ] **Story 2.3: Establish SSE Connection**
-- [ ] **Story 2.4: Chat History CRUD**
+- [x] **Story 2.3: Establish SSE Connection**
+- [x] **Story 2.4: Chat History CRUD**
 
 ## **Epic 3: Core Orchestrator Engine ("Big Boss")**
 - [ ] **Story 3.1: Gemini Pro Integration**

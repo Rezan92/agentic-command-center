@@ -8,26 +8,14 @@ import { Send } from "lucide-react";
 
 export function MessageInput() {
   const [value, setValue] = useState("");
-  const { addMessage, isThinking, setThinking } = useChatStore();
+  const { sendMessage, isThinking } = useChatStore();
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!value.trim() || isThinking) return;
 
-    addMessage({
-      role: "user",
-      content: value,
-    });
+    const content = value;
     setValue("");
-
-    // Mock response for now
-    setThinking(true);
-    setTimeout(() => {
-      addMessage({
-        role: "assistant",
-        content: `I received your message: "${value}". The Orchestrator engine will process this soon.`,
-      });
-      setThinking(false);
-    }, 1500);
+    await sendMessage(content);
   };
 
   return (

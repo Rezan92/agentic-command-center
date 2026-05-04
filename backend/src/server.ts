@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import orchestratorRoutes from './routes/orchestrator';
+import chatRoutes from './routes/chat.routes';
 import { requestLogger } from './middleware/logger';
 import { errorHandler } from './middleware/errorHandler';
 import { mvpAuth } from './middleware/mvpAuth';
@@ -20,6 +21,7 @@ app.use(mvpAuth); // Mock Auth for all routes in MVP
 
 // Routes
 app.use('/api/orchestrator', orchestratorRoutes);
+app.use('/api', chatRoutes);
 
 app.get('/health', (req, res) => {
   res.json({ 
