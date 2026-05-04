@@ -46,16 +46,28 @@ export const useChatStore = create<ChatState>((set, get) => ({
   sendMessage: async (content) => {
     const { conversationId, messages } = get();
     
-    // Optimistically add user message
-    const tempUserId = `temp-user-${Date.now()}`;
-    const tempUserMsg: Message = {
+    // 1. Add User Message
+    const tempUserId = `user-${Date.now()}`;
+    const userMsg: Message = {
       id: tempUserId,
       role: 'USER',
       content,
       createdAt: new Date().toISOString(),
     };
     
-    set({ messages: [...messages, tempUserMsg], isThinking: true });
+    // 2. Prepare Assistant Placeholder
+    const assistantId = `assistant-${Date.now()}`;
+    const assistantMsg: Message = {
+      id: assistantId,
+      role: 'ASSISTANT',
+      content: '',
+      createdAt: new Date().toISOString(),
+    };
+
+    set({ 
+      messages: [...messages, userMsg, assistantMsg], 
+      isThinking: true 
+    });
 
     try {
       const response = await fetch(`${API_URL}/chat`, {
@@ -64,29 +76,43 @@ export const useChatStore = create<ChatState>((set, get) => ({
         body: JSON.stringify({ message: content, conversationId }),
       });
 
-      if (!response.ok) {
-        throw new Error(`Server responded with ${response.status}`);
+      if (!response.ok) throw new Error('Failed to send message');
+
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      let accumulatedText = '';
+
+      if (reader) {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          const chunk = decoder.decode(value);
+          // DataStream format usually contains parts like '0:"hello "'
+          // We'll use a simple regex to extract the text content from parts like 0:"..."
+          const matches = chunk.matchAll(/0:"([^"]*)"/g);
+          for (const match of matches) {
+            accumulatedText += match[1].replace(/\\n/g, '\n');
+          }
+
+          set((state) => ({
+            messages: state.messages.map((m) =>
+              m.id === assistantId ? { ...m, content: accumulatedText } : m
+            ),
+            isThinking: false
+          }));
+        }
       }
 
-      const data = await response.json();
-      
-      if (data.message) {
-        set((state) => ({
-          messages: [
-            ...state.messages.filter(m => m.id !== tempUserId), 
-            tempUserMsg, // Keep the user message (maybe update ID if server returns one)
-            data.message
-          ],
-          conversationId: data.conversationId,
-          isThinking: false,
-        }));
-      }
+      // Final sync with backend if needed (optional since we have stream)
+      // But we should refresh to get the real IDs from DB eventually
+      get().fetchHistory();
+
     } catch (error) {
-      console.error('Failed to send message:', error);
-      // Remove the optimistic user message and stop thinking on failure
+      console.error('Stream Error:', error);
       set((state) => ({
-        messages: state.messages.filter(m => m.id !== tempUserId),
-        isThinking: false,
+        messages: state.messages.filter(m => m.id !== tempUserId && m.id !== assistantId),
+        isThinking: false
       }));
     }
   },

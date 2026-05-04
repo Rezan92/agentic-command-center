@@ -17,9 +17,9 @@
 - [x] **Story 2.4: Chat History CRUD**
 
 ## **Epic 3: Core Orchestrator Engine ("Big Boss")**
-- [ ] **Story 3.1: Gemini Pro Integration**
+- [x] **Story 3.1: Gemini Pro Integration**
 - [ ] **Story 3.2: Define MCP-Inspired Zod Schemas**
-- [ ] **Story 3.3: Sliding Window Context Management**
+- [x] **Story 3.3: Sliding Window Context Management**
 - [ ] **Story 3.4: Task-Result Compaction**
 
 ## **Epic 4: Worker Agent Integrations ("Little Employees")**

@@ -1,5 +1,8 @@
 import { Router } from 'express';
 import prisma from '../database/client';
+import { google } from '@ai-sdk/google';
+import { streamText } from 'ai';
+import { getRecentContext } from '../orchestrator/memory';
 
 const router = Router();
 
@@ -33,27 +36,30 @@ router.get('/conversations/:id/messages', async (req, res, next) => {
   }
 });
 
-// POST /api/chat - Save user message and return mock response
+// POST /api/chat - AI Orchestrator with Streaming
 router.post('/chat', async (req, res, next) => {
   try {
     const { message, conversationId } = req.body;
     const userId = res.locals.userId;
 
-    if (!userId) return res.status(401).json({ error: 'Unauthorized - No User ID' });
+    if (!userId) return res.status(401).json({ error: 'Unauthorized' });
 
-    // 1. Ensure a conversation exists or create one
+    // 1. Ensure conversation exists
     let targetConversationId = conversationId;
     if (!targetConversationId) {
       const newConversation = await prisma.conversation.create({
         data: {
-          userId: userId,
-          title: message.substring(0, 30) + '...',
+          userId,
+          title: message.substring(0, 30) + (message.length > 30 ? '...' : ''),
         },
       });
       targetConversationId = newConversation.id;
     }
 
-    // 2. Save User Message
+    // 2. Fetch recent context
+    const history = await getRecentContext(targetConversationId);
+
+    // 3. Save User Message to DB
     await prisma.message.create({
       data: {
         conversationId: targetConversationId,
@@ -62,22 +68,51 @@ router.post('/chat', async (req, res, next) => {
       },
     });
 
-    // 3. Mock Assistant Response (Will be AI in Epic 3)
-    const mockContent = "I am the mock backend. I have saved your message to Postgres.";
-    
-    // Save Assistant Message
-    const assistantMessage = await prisma.message.create({
-      data: {
-        conversationId: targetConversationId,
-        role: 'ASSISTANT',
-        content: mockContent,
+    // 4. Stream AI Response
+    const result = streamText({
+      model: google('gemini-1.5-pro'),
+      messages: [
+        ...history,
+        { role: 'user', content: message }
+      ],
+      onFinish: async ({ text }) => {
+        // Save Assistant Message to DB when finished
+        await prisma.message.create({
+          data: {
+            conversationId: targetConversationId,
+            role: 'ASSISTANT',
+            content: text,
+          },
+        });
       },
     });
 
-    res.json({
-      conversationId: targetConversationId,
-      message: assistantMessage,
+    // Return the stream as a DataStreamResponse
+    return result.toDataStreamResponse().then(streamRes => {
+      // Set headers for SSE-like streaming if needed, though toDataStreamResponse handles most
+      streamRes.headers.forEach((value, key) => {
+        res.setHeader(key, value);
+      });
+      
+      // Pipe the body to express res
+      const reader = streamRes.body?.getReader();
+      const writer = res;
+      
+      if (!reader) return res.end();
+
+      const pump = async () => {
+        const { done, value } = await reader.read();
+        if (done) {
+          res.end();
+          return;
+        }
+        res.write(value);
+        return pump();
+      };
+      
+      return pump();
     });
+
   } catch (error) {
     next(error);
   }
