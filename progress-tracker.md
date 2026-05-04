@@ -11,8 +11,8 @@
   - Implement Winston logger for API requests and AI executions.
 
 ## **Epic 2: Frontend Shell & Real-Time Comms**
-- [ ] **Story 2.1: Initialize Next.js & UI Library**
-- [ ] **Story 2.2: Build the Chat Interface UI**
+- [x] **Story 2.1: Initialize Next.js & UI Library**
+- [x] **Story 2.2: Build the Chat Interface UI**
 - [ ] **Story 2.3: Establish SSE Connection**
 - [ ] **Story 2.4: Chat History CRUD**
 
