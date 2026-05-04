@@ -6,8 +6,8 @@ const router = Router();
 // GET /api/conversations - Fetch user's conversations
 router.get('/conversations', async (req, res, next) => {
   try {
-    const userId = req.user?.id;
-    if (!userId) return res.status(401).json({ error: 'Unauthorized' });
+    const userId = res.locals.userId;
+    if (!userId) return res.status(401).json({ error: 'Unauthorized - No User ID' });
 
     const conversations = await prisma.conversation.findMany({
       where: { userId },
@@ -37,16 +37,16 @@ router.get('/conversations/:id/messages', async (req, res, next) => {
 router.post('/chat', async (req, res, next) => {
   try {
     const { message, conversationId } = req.body;
-    const userId = req.user?.id;
+    const userId = res.locals.userId;
 
-    if (!userId) return res.status(401).json({ error: 'Unauthorized' });
+    if (!userId) return res.status(401).json({ error: 'Unauthorized - No User ID' });
 
     // 1. Ensure a conversation exists or create one
     let targetConversationId = conversationId;
     if (!targetConversationId) {
       const newConversation = await prisma.conversation.create({
         data: {
-          userId,
+          userId: userId,
           title: message.substring(0, 30) + '...',
         },
       });

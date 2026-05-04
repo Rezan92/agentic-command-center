@@ -13,11 +13,14 @@ export function MessageList() {
 
   useEffect(() => {
     fetchHistory();
-  }, []);
+  }, [fetchHistory]);
 
   useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      const scrollContainer = scrollRef.current.querySelector('[data-radix-scroll-area-viewport]');
+      if (scrollContainer) {
+        scrollContainer.scrollTop = scrollContainer.scrollHeight;
+      }
     }
   }, [messages, isThinking]);
 
@@ -29,16 +32,16 @@ export function MessageList() {
             key={message.id}
             className={cn(
               "flex gap-3",
-              message.role === "user" ? "flex-row-reverse" : "flex-row"
+              message.role === "USER" ? "flex-row-reverse" : "flex-row"
             )}
           >
             <div
               className={cn(
                 "flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-md border shadow-sm",
-                message.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted"
+                message.role === "USER" ? "bg-primary text-primary-foreground" : "bg-muted"
               )}
             >
-              {message.role === "user" ? (
+              {message.role === "USER" ? (
                 <User className="h-4 w-4" />
               ) : (
                 <Bot className="h-4 w-4" />
@@ -47,7 +50,7 @@ export function MessageList() {
             <Card
               className={cn(
                 "px-4 py-2 max-w-[80%] text-sm shadow-sm",
-                message.role === "user"
+                message.role === "USER"
                   ? "bg-primary text-primary-foreground border-primary"
                   : "bg-background"
               )}

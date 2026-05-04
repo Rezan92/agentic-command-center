@@ -25,27 +25,31 @@ export const useChatStore = create<ChatState>((set, get) => ({
 
   fetchHistory: async () => {
     try {
-      // For MVP, we fetch the first conversation found or default to none
       const convRes = await fetch(`${API_URL}/conversations`);
+      if (!convRes.ok) throw new Error('Failed to fetch conversations');
+      
       const conversations = await convRes.json();
       
       if (conversations.length > 0) {
         const activeConv = conversations[0];
         const msgRes = await fetch(`${API_URL}/conversations/${activeConv.id}/messages`);
+        if (!msgRes.ok) throw new Error('Failed to fetch messages');
+        
         const messages = await msgRes.json();
         set({ messages, conversationId: activeConv.id });
       }
     } catch (error) {
-      console.error('Failed to fetch chat history:', error);
+      console.error('Chat history fetch error:', error);
     }
   },
 
   sendMessage: async (content) => {
     const { conversationId, messages } = get();
     
-    // Optimistically add user message (with temporary ID)
+    // Optimistically add user message
+    const tempUserId = `temp-user-${Date.now()}`;
     const tempUserMsg: Message = {
-      id: Date.now().toString(),
+      id: tempUserId,
       role: 'USER',
       content,
       createdAt: new Date().toISOString(),
@@ -60,18 +64,30 @@ export const useChatStore = create<ChatState>((set, get) => ({
         body: JSON.stringify({ message: content, conversationId }),
       });
 
+      if (!response.ok) {
+        throw new Error(`Server responded with ${response.status}`);
+      }
+
       const data = await response.json();
       
       if (data.message) {
         set((state) => ({
-          messages: [...state.messages.filter(m => m.id !== tempUserMsg.id), tempUserMsg, data.message],
+          messages: [
+            ...state.messages.filter(m => m.id !== tempUserId), 
+            tempUserMsg, // Keep the user message (maybe update ID if server returns one)
+            data.message
+          ],
           conversationId: data.conversationId,
           isThinking: false,
         }));
       }
     } catch (error) {
       console.error('Failed to send message:', error);
-      set({ isThinking: false });
+      // Remove the optimistic user message and stop thinking on failure
+      set((state) => ({
+        messages: state.messages.filter(m => m.id !== tempUserId),
+        isThinking: false,
+      }));
     }
   },
 

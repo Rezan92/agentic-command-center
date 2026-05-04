@@ -13,13 +13,15 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3001;
 
-// Global Middleware
+// 1. Global Pre-processing Middleware
 app.use(cors());
 app.use(express.json());
 app.use(requestLogger);
-app.use(mvpAuth); // Mock Auth for all routes in MVP
 
-// Routes
+// 2. Authentication Middleware (Must be before routes that use res.locals.userId)
+app.use(mvpAuth);
+
+// 3. Routes
 app.use('/api/orchestrator', orchestratorRoutes);
 app.use('/api', chatRoutes);
 
@@ -27,11 +29,11 @@ app.get('/health', (req, res) => {
   res.json({ 
     status: 'ok', 
     service: 'Agentic Command Center Backend',
-    user: req.user // Verify mock auth works
+    userId: res.locals.userId // Verify res.locals works
   });
 });
 
-// Error Handling (Must be after routes)
+// 4. Global Error Handling (Must be last)
 app.use(errorHandler);
 
 app.listen(port, () => {
