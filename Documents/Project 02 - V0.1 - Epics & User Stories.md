@@ -27,8 +27,20 @@ This backlog is organized sequentially. Each epic builds the necessary foundatio
   * *Description:* Create an Express endpoint that opens a Server-Sent Events (SSE) stream. Configure the Next.js frontend to listen to this stream to receive real-time updates.  
 * **Story 2.4: Chat History CRUD**  
   * *Description:* Create Express REST endpoints to fetch previous Conversation and Message records from Postgres, and render them in the Next.js UI on load.
+* **Story 2.5: Multi-Chat Sidebar & Navigation**
+  * *Description:* Implement a collapsible sidebar to list, select, and create new conversations, allowing the user to maintain separate contexts.
 
 ## **Epic 3: Core Orchestrator Engine ("Big Boss")**
+...
+## **Epic 6: UI/UX Refinement & Formatting**
+
+*Goal: Improve the visual presentation of AI responses and general interface polish.*
+
+* **Story 6.1: Markdown & Rich Text Rendering**
+  * *Description:* Implement react-markdown on the frontend to render lists, bold text, and code blocks in an organized, visually appealing format.
+* **Story 6.2: Response Organization**
+  * *Description:* Refine the AI's instruction set to ensure it uses structured Markdown (headers, bullet points) for complex answers.
+
 
 *Goal: Integrate Gemini 1.5 Pro and define the strict communication protocol.*
 

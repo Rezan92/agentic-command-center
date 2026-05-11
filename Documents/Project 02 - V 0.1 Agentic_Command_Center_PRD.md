@@ -74,16 +74,19 @@ To prevent Context Window Bloat and massive latency/cost spikes:
 ## **8\. Feature Scope (MVP / Phase 1\)**
 
 * **Chat Interface:** Streaming text, dynamic UI components, real-time Agent Status tracking.  
+* **Multi-Chat Management:** Collapsible sidebar for conversation history, "New Chat" creation, and persistent session storage.
+* **UI/UX Refinement:** Markdown rendering for organized AI responses, syntax highlighting, and responsive design.
 * **Google Calendar Integration:** Find, Create, Update, Delete (requires HITL).  
 * **Notion Integration:** Global search, Read items, Create/Update items.
 
 ## **9\. Execution Roadmap**
 
 * **Phase 1: Backend Foundation.** Express routing, PostgreSQL setup, User/OAuth tables, structured logging.  
-* **Phase 2: Frontend & Sockets.** Next.js UI shell, Zustand state, SSE/WebSocket connection to Express to stream mock Agent statuses.  
-* **Phase 3: The Orchestrator.** Gemini Pro integration, Context Management (sliding window, compaction), Zod schemas.  
-* **Phase 4: Worker Integrations.** Google/Notion OAuth, Gemini Flash workers, CRUD function mappings.  
-* **Phase 5: Safety & Polish.** HITL batching modals, Timeout handlers, Error boundary UI.
+* **Phase 2: Frontend Shell & Persistence.** Next.js UI shell, Zustand state, Sidebar for conversation history, and basic REST endpoints for chat persistence.
+* **Phase 3: The Orchestrator.** Gemini integration, Context Management (sliding window, system persona), and Zod schemas for tool calling.
+* **Phase 4: UI/UX & Rich Content.** Markdown rendering for AI responses and interface polish.
+* **Phase 5: Worker Integrations.** Google/Notion OAuth, Gemini Flash workers, CRUD function mappings.  
+* **Phase 6: Safety & Polish.** HITL batching modals, Timeout handlers, Error boundary UI.
 
 ## **10\. Success Metrics**
 
