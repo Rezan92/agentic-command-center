@@ -28,3 +28,113 @@
 {"level":"info","message":"Backend engine running on http://localhost:3001","timestamp":"2026-05-04T07:49:40.829Z"}
 {"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-04T07:49:44.665Z"}
 {"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-04T07:49:45.228Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-04T07:53:00.148Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-04T07:53:00.644Z"}
+{"body":{"conversationId":"4436d98d-2232-4b1e-bf29-2cd6fdad1d14","message":"what to test"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-04T07:53:09.708Z"}
+{"level":"error","message":"result.toDataStreamResponse is not a function","method":"POST","stack":"TypeError: result.toDataStreamResponse is not a function\n    at C:\\Users\\syria\\Documents\\WebProjects\\Personal Assistance\\backend\\src\\routes\\chat.routes.ts:91:19\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2026-05-04T07:53:10.138Z","url":"/api/chat"}
+{"level":"info","message":"Backend engine running on http://localhost:3001","timestamp":"2026-05-04T07:55:51.484Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-04T07:56:12.194Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-04T07:56:12.844Z"}
+{"body":{"conversationId":"4436d98d-2232-4b1e-bf29-2cd6fdad1d14","message":"test 2"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-04T07:56:20.339Z"}
+{"level":"error","message":"result.pipeDataStreamToResponse is not a function","method":"POST","stack":"TypeError: result.pipeDataStreamToResponse is not a function\n    at C:\\Users\\syria\\Documents\\WebProjects\\Personal Assistance\\backend\\src\\routes\\chat.routes.ts:91:12\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2026-05-04T07:56:20.727Z","url":"/api/chat"}
+{"level":"info","message":"Backend engine running on http://localhost:3001","timestamp":"2026-05-04T07:56:43.908Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-04T07:56:59.218Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-04T07:56:59.828Z"}
+{"level":"info","message":"Backend engine running on http://localhost:3001","timestamp":"2026-05-04T07:57:13.753Z"}
+{"body":{"conversationId":"4436d98d-2232-4b1e-bf29-2cd6fdad1d14","message":"Test"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-04T07:57:22.173Z"}
+{"level":"error","message":"result.pipeDataStreamToResponse is not a function","method":"POST","stack":"TypeError: result.pipeDataStreamToResponse is not a function\n    at C:\\Users\\syria\\Documents\\WebProjects\\Personal Assistance\\backend\\src\\routes\\chat.routes.ts:91:12\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2026-05-04T07:57:22.994Z","url":"/api/chat"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-04T07:57:54.405Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-04T07:57:54.870Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-04T07:58:05.875Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-04T07:58:06.339Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-04T07:58:21.638Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-04T07:58:22.097Z"}
+{"body":{"conversationId":"4436d98d-2232-4b1e-bf29-2cd6fdad1d14","message":"Test"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-04T07:58:25.447Z"}
+{"level":"error","message":"result.pipeDataStreamToResponse is not a function","method":"POST","stack":"TypeError: result.pipeDataStreamToResponse is not a function\n    at C:\\Users\\syria\\Documents\\WebProjects\\Personal Assistance\\backend\\src\\routes\\chat.routes.ts:91:12\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2026-05-04T07:58:25.736Z","url":"/api/chat"}
+{"level":"info","message":"Backend engine running on http://localhost:3001","timestamp":"2026-05-04T08:03:53.108Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-04T08:04:08.490Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-04T08:04:09.216Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-04T08:04:39.619Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-04T08:04:40.097Z"}
+{"body":{"conversationId":"4436d98d-2232-4b1e-bf29-2cd6fdad1d14","message":"test"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-04T08:04:58.214Z"}
+{"level":"error","message":"(0 , ai_1.pipeDataStreamToResponse) is not a function","method":"POST","stack":"TypeError: (0 , ai_1.pipeDataStreamToResponse) is not a function\n    at C:\\Users\\syria\\Documents\\WebProjects\\Personal Assistance\\backend\\src\\routes\\chat.routes.ts:72:29\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2026-05-04T08:04:58.753Z","url":"/api/chat"}
+{"body":{"conversationId":"4436d98d-2232-4b1e-bf29-2cd6fdad1d14","message":"Test 2"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-11T03:55:24.677Z"}
+{"level":"error","message":"(0 , ai_1.pipeDataStreamToResponse) is not a function","method":"POST","stack":"TypeError: (0 , ai_1.pipeDataStreamToResponse) is not a function\n    at C:\\Users\\syria\\Documents\\WebProjects\\Personal Assistance\\backend\\src\\routes\\chat.routes.ts:72:29\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2026-05-11T03:55:25.346Z","url":"/api/chat"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:03:10.209Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:03:10.754Z"}
+{"body":{"conversationId":"4436d98d-2232-4b1e-bf29-2cd6fdad1d14","message":"test"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-11T04:04:09.620Z"}
+{"level":"error","message":"(0 , ai_1.pipeDataStreamToResponse) is not a function","method":"POST","stack":"TypeError: (0 , ai_1.pipeDataStreamToResponse) is not a function\n    at C:\\Users\\syria\\Documents\\WebProjects\\Personal Assistance\\backend\\src\\routes\\chat.routes.ts:72:29\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2026-05-11T04:04:10.153Z","url":"/api/chat"}
+{"level":"info","message":"Backend engine running on http://localhost:3001","timestamp":"2026-05-11T04:05:11.893Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:05:12.062Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:05:12.752Z"}
+{"body":{"conversationId":"4436d98d-2232-4b1e-bf29-2cd6fdad1d14","message":"test"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-11T04:05:24.086Z"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'pipeThrough')","method":"POST","stack":"TypeError: Cannot read properties of undefined (reading 'pipeThrough')\n    at pipeTextStreamToResponse (C:\\Users\\syria\\Documents\\WebProjects\\Personal Assistance\\backend\\node_modules\\ai\\src\\text-stream\\pipe-text-stream-to-response.ts:36:24)\n    at C:\\Users\\syria\\Documents\\WebProjects\\Personal Assistance\\backend\\src\\routes\\chat.routes.ts:91:29\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2026-05-11T04:05:24.736Z","url":"/api/chat"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:05:39.980Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:05:40.419Z"}
+{"body":{"conversationId":"4436d98d-2232-4b1e-bf29-2cd6fdad1d14","message":"test"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-11T04:05:47.259Z"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'pipeThrough')","method":"POST","stack":"TypeError: Cannot read properties of undefined (reading 'pipeThrough')\n    at pipeTextStreamToResponse (C:\\Users\\syria\\Documents\\WebProjects\\Personal Assistance\\backend\\node_modules\\ai\\src\\text-stream\\pipe-text-stream-to-response.ts:36:24)\n    at C:\\Users\\syria\\Documents\\WebProjects\\Personal Assistance\\backend\\src\\routes\\chat.routes.ts:91:29\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2026-05-11T04:05:47.553Z","url":"/api/chat"}
+{"level":"info","message":"Backend engine running on http://localhost:3001","timestamp":"2026-05-11T04:06:39.222Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:07:56.653Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:07:57.330Z"}
+{"body":{"conversationId":"4436d98d-2232-4b1e-bf29-2cd6fdad1d14","message":"test"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-11T04:08:02.485Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:08:02.912Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:08:03.164Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:08:23.709Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:08:24.210Z"}
+{"body":{"conversationId":"4436d98d-2232-4b1e-bf29-2cd6fdad1d14","message":"test8"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-11T04:08:31.268Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:08:31.572Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:08:31.808Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:26:54.820Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:26:55.323Z"}
+{"body":{"conversationId":"4436d98d-2232-4b1e-bf29-2cd6fdad1d14","message":"test 10"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-11T04:27:04.644Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:27:04.949Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:27:05.190Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:29:17.301Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:29:17.742Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:29:18.053Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:29:18.287Z"}
+{"level":"info","message":"Backend engine running on http://localhost:3001","timestamp":"2026-05-11T04:29:25.663Z"}
+{"body":{"conversationId":"4436d98d-2232-4b1e-bf29-2cd6fdad1d14","message":"test 88"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-11T04:29:25.976Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:29:26.732Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:29:26.956Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:31:30.626Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:31:31.133Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:31:50.691Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:31:51.231Z"}
+{"body":{"conversationId":"4436d98d-2232-4b1e-bf29-2cd6fdad1d14","message":"Test 66"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-11T04:32:03.588Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:32:04.092Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:32:04.330Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:32:36.243Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:32:36.728Z"}
+{"body":{"conversationId":"4436d98d-2232-4b1e-bf29-2cd6fdad1d14","message":"test"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-11T04:32:45.363Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:32:45.651Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:32:45.879Z"}
+{"level":"info","message":"Backend engine running on http://localhost:3001","timestamp":"2026-05-11T04:35:25.049Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:35:40.122Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:35:40.781Z"}
+{"body":{"conversationId":"4436d98d-2232-4b1e-bf29-2cd6fdad1d14","message":"trst60"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-11T04:35:56.136Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:35:56.703Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:35:56.908Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:37:17.011Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:37:17.497Z"}
+{"level":"info","message":"Backend engine running on http://localhost:3001","timestamp":"2026-05-11T04:37:25.637Z"}
+{"body":{"conversationId":"4436d98d-2232-4b1e-bf29-2cd6fdad1d14","message":"tgest50"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-11T04:37:45.513Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:43:17.809Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:43:18.281Z"}
+{"body":{"conversationId":"4436d98d-2232-4b1e-bf29-2cd6fdad1d14","message":"Test 100 what do you think about the news today?"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-11T04:43:44.383Z"}
+{"level":"info","message":"Backend engine running on http://localhost:3001","timestamp":"2026-05-11T04:44:13.872Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:44:20.740Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:44:21.340Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:44:34.084Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:44:34.571Z"}
+{"body":{"conversationId":"4436d98d-2232-4b1e-bf29-2cd6fdad1d14","message":"What do you think about today's news?"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-11T04:44:51.546Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:44:52.392Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:44:52.619Z"}
+{"level":"info","message":"Backend engine running on http://localhost:3001","timestamp":"2026-05-11T04:46:14.777Z"}
+{"body":{"conversationId":"4436d98d-2232-4b1e-bf29-2cd6fdad1d14","message":"What do you think about today's news?"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-11T04:46:42.128Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T04:46:43.116Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T04:46:43.329Z"}
+{"level":"info","message":"Backend engine running on http://localhost:3001","timestamp":"2026-05-11T05:00:55.146Z"}
+{"body":{"conversationId":"4436d98d-2232-4b1e-bf29-2cd6fdad1d14","message":"What do you think about today's news?"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-11T05:03:41.946Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T05:03:49.159Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T05:03:49.385Z"}
