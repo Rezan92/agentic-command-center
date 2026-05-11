@@ -8,12 +8,8 @@ import { cn } from "@/lib/utils";
 import { User, Bot } from "lucide-react";
 
 export function MessageList() {
-  const { messages, isThinking, fetchHistory } = useChatStore();
+  const { messages, isThinking } = useChatStore();
   const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    fetchHistory();
-  }, [fetchHistory]);
 
   useEffect(() => {
     if (scrollRef.current) {

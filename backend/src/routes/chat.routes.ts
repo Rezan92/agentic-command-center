@@ -2,11 +2,11 @@ import { Router } from 'express';
 import prisma from '../database/client';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { streamText } from 'ai';
-import { getRecentContext } from '../orchestrator/memory';
+import { getRecentContext, getSystemInstructions, ChatMessage } from '../orchestrator/memory';
 
 const router = Router();
 
-// Configure Google Provider explicitly to handle both env variable names
+// Configure Google Provider
 const google = createGoogleGenerativeAI({
   apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY || process.env.GEMINI_API_KEY,
 });
@@ -41,29 +41,22 @@ router.get('/conversations/:id/messages', async (req, res, next) => {
   }
 });
 
-// POST /api/chat - AI Orchestrator with Manual Streaming & Debug Logging
+// POST /api/chat - AI Orchestrator with Streaming & System Persona
 router.post('/chat', async (req, res, next) => {
   try {
     const { message, conversationId } = req.body;
     const userId = res.locals.userId;
 
-    console.log('[Backend] New chat request:', { message, conversationId, userId });
-
     const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY || process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      console.error('[Backend] CRITICAL: No Google/Gemini API key found in environment variables.');
       return res.status(500).json({ error: 'AI Configuration Error: Missing API Key' });
     }
 
-    if (!userId) {
-      console.error('[Backend] Unauthorized: No userId in res.locals');
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
+    if (!userId) return res.status(401).json({ error: 'Unauthorized' });
 
     // 1. Ensure conversation exists
     let targetConversationId = conversationId;
     if (!targetConversationId) {
-      console.log('[Backend] No conversationId provided, creating new one...');
       const newConversation = await prisma.conversation.create({
         data: {
           userId,
@@ -71,16 +64,13 @@ router.post('/chat', async (req, res, next) => {
         },
       });
       targetConversationId = newConversation.id;
-      console.log('[Backend] Created conversation:', targetConversationId);
     }
 
-    // 2. Fetch recent context
-    console.log('[Backend] Fetching context for:', targetConversationId);
+    // 2. Fetch context and system prompt
     const history = await getRecentContext(targetConversationId);
-    console.log('[Backend] Found history turns:', history.length);
+    const systemPrompt = getSystemInstructions();
 
-    // 3. Save User Message to DB
-    console.log('[Backend] Saving user message...');
+    // 3. Save User Message to DB immediately
     await prisma.message.create({
       data: {
         conversationId: targetConversationId,
@@ -89,19 +79,21 @@ router.post('/chat', async (req, res, next) => {
       },
     });
 
-    // 4. Execute AI call
-    console.log('[Backend] Initializing Gemini stream...');
-    
-    const messages: any[] = [
+    // 4. Construct strictly typed messages array for LLM
+    const promptMessages: ChatMessage[] = [
+      { role: 'system', content: systemPrompt },
       ...history,
       { role: 'user', content: message }
     ];
 
+    console.log(`[Backend] Streaming Turn: User -> ${targetConversationId}`);
+
+    // 5. Execute AI call
     const result = streamText({
       model: google('gemini-2.5-flash'),
-      messages,
+      messages: promptMessages as any,
       onFinish: async ({ text }) => {
-        console.log('[Backend] Stream finished, saving assistant message. Length:', text.length);
+        // Save Assistant Message to DB
         await prisma.message.create({
           data: {
             conversationId: targetConversationId,
@@ -112,31 +104,18 @@ router.post('/chat', async (req, res, next) => {
       },
     });
 
-    // 5. Manual Streaming to Express
+    // 6. Manual Streaming to Express
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.setHeader('Transfer-Encoding', 'chunked');
-    res.setHeader('Connection', 'keep-alive');
-
-    console.log('[Backend] Starting stream loop...');
-    let chunkCount = 0;
-    let fullResponse = '';
 
     for await (const textPart of result.textStream) {
-      chunkCount++;
-      fullResponse += textPart;
-      console.log(`[Backend] Chunk ${chunkCount}: "${textPart}"`);
       res.write(textPart);
     }
 
-    if (chunkCount === 0) {
-      console.error('[Backend] WARNING: Stream completed with ZERO chunks.');
-    } else {
-      console.log(`[Backend] Stream loop complete. Total chunks: ${chunkCount}. Full Length: ${fullResponse.length}`);
-    }
     res.end();
 
   } catch (error: any) {
-    console.error('[Backend] Streaming Route Error:', error);
+    console.error('[Backend] Chat Error:', error);
     if (!res.headersSent) {
       res.status(500).json({ error: error.message || 'Internal Server Error' });
     } else {

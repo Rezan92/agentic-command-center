@@ -7,11 +7,22 @@ export interface Message {
   createdAt: string;
 }
 
+export interface Conversation {
+  id: string;
+  title: string | null;
+  updatedAt: string;
+}
+
 interface ChatState {
   messages: Message[];
+  conversations: Conversation[];
   conversationId: string | null;
   isThinking: boolean;
-  fetchHistory: () => Promise<void>;
+  
+  // Actions
+  fetchConversations: () => Promise<void>;
+  fetchMessages: (id: string) => Promise<void>;
+  startNewChat: () => void;
   sendMessage: (content: string) => Promise<void>;
   setThinking: (thinking: boolean) => void;
 }
@@ -20,33 +31,45 @@ const API_URL = 'http://localhost:3001/api';
 
 export const useChatStore = create<ChatState>((set, get) => ({
   messages: [],
+  conversations: [],
   conversationId: null,
   isThinking: false,
 
-  fetchHistory: async () => {
+  fetchConversations: async () => {
     try {
-      const convRes = await fetch(`${API_URL}/conversations`);
-      if (!convRes.ok) throw new Error('Failed to fetch conversations');
+      const res = await fetch(`${API_URL}/conversations`);
+      if (!res.ok) throw new Error('Failed to fetch conversations');
+      const data = await res.json();
+      set({ conversations: data });
       
-      const conversations = await convRes.json();
-      
-      if (conversations.length > 0) {
-        const activeConv = conversations[0];
-        const msgRes = await fetch(`${API_URL}/conversations/${activeConv.id}/messages`);
-        if (!msgRes.ok) throw new Error('Failed to fetch messages');
-        
-        const messages = await msgRes.json();
-        set({ messages, conversationId: activeConv.id });
+      // If we don't have an active conversation but there are some, load the first one
+      if (!get().conversationId && data.length > 0) {
+        get().fetchMessages(data[0].id);
       }
     } catch (error) {
-      console.error('Chat history fetch error:', error);
+      console.error('Fetch conversations error:', error);
     }
+  },
+
+  fetchMessages: async (id: string) => {
+    try {
+      const res = await fetch(`${API_URL}/conversations/${id}/messages`);
+      if (!res.ok) throw new Error('Failed to fetch messages');
+      const messages = await res.json();
+      set({ messages, conversationId: id });
+    } catch (error) {
+      console.error('Fetch messages error:', error);
+    }
+  },
+
+  startNewChat: () => {
+    set({ messages: [], conversationId: null });
   },
 
   sendMessage: async (content) => {
     const { conversationId, messages } = get();
     
-    // 1. Add User Message
+    // 1. Add User Message (Optimistic)
     const tempUserId = `user-${Date.now()}`;
     const userMsg: Message = {
       id: tempUserId,
@@ -69,8 +92,6 @@ export const useChatStore = create<ChatState>((set, get) => ({
       isThinking: true 
     });
 
-    console.log('Sending message to backend...');
-
     try {
       const response = await fetch(`${API_URL}/chat`, {
         method: 'POST',
@@ -78,53 +99,43 @@ export const useChatStore = create<ChatState>((set, get) => ({
         body: JSON.stringify({ message: content, conversationId }),
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Server Error (${response.status}): ${errorText}`);
-      }
-
-      console.log('Stream connection established. Reading chunks...');
+      if (!response.ok) throw new Error('Failed to send message');
 
       const reader = response.body?.getReader();
       const decoder = new TextDecoder();
       let accumulatedText = '';
 
-      if (!reader) throw new Error('Response body has no reader');
+      if (reader) {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) {
-          console.log('Stream complete.');
-          break;
+          const chunk = decoder.decode(value, { stream: true });
+          accumulatedText += chunk;
+
+          set((state) => ({
+            messages: state.messages.map((m) =>
+              m.id === assistantId ? { ...m, content: accumulatedText } : m
+            ),
+          }));
         }
-
-        const chunk = decoder.decode(value, { stream: true });
-        console.log('Received chunk:', chunk);
-        accumulatedText += chunk;
-
-        set((state) => ({
-          messages: state.messages.map((m) =>
-            m.id === assistantId ? { ...m, content: accumulatedText } : m
-          ),
-          // We don't set isThinking to false here yet, 
-          // because we want to wait for the first chunk or completion
-        }));
       }
 
-      // 3. Reset thinking state after stream finishes
       set({ isThinking: false });
-
-      // 4. Final sync with backend to get real database IDs
-      get().fetchHistory();
+      
+      // Refresh conversations list (in case a new one was created)
+      get().fetchConversations();
+      
+      // If it was a new chat, we need to capture the real conversationId from the first message
+      // Note: Backend returns { conversationId, message } in Epic 2, but v3 stream changed this.
+      // We'll rely on fetchConversations and fetchMessages for full sync.
 
     } catch (error) {
-      console.error('Frontend Chat Error:', error);
-      // Rollback UI
+      console.error('Stream Error:', error);
       set((state) => ({
         messages: state.messages.filter(m => m.id !== tempUserId && m.id !== assistantId),
         isThinking: false
       }));
-      alert(`Chat Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   },
 

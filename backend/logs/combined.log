@@ -138,3 +138,19 @@
 {"body":{"conversationId":"4436d98d-2232-4b1e-bf29-2cd6fdad1d14","message":"What do you think about today's news?"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-11T05:03:41.946Z"}
 {"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T05:03:49.159Z"}
 {"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T05:03:49.385Z"}
+{"level":"info","message":"Backend engine running on http://localhost:3001","timestamp":"2026-05-11T05:33:43.986Z"}
+{"body":{"conversationId":"4436d98d-2232-4b1e-bf29-2cd6fdad1d14","message":"what should we do then"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-11T05:36:25.205Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T05:36:29.257Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T05:36:29.525Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T05:43:34.669Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T05:43:35.178Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T05:43:37.418Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T05:43:37.651Z"}
+{"body":{"conversationId":null,"message":"What is the way to learn new code explenation and "},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-11T05:44:52.957Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T05:44:55.143Z"}
+{"level":"info","message":"GET /api/conversations/2011147b-65e2-4f82-b122-2a6e54a7d72f/messages","params":{},"query":{},"timestamp":"2026-05-11T05:44:55.357Z"}
+{"body":{"conversationId":"2011147b-65e2-4f82-b122-2a6e54a7d72f","message":"what are you"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-11T05:46:17.371Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-11T05:46:19.276Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T05:46:56.223Z"}
+{"level":"info","message":"GET /api/conversations/2011147b-65e2-4f82-b122-2a6e54a7d72f/messages","params":{},"query":{},"timestamp":"2026-05-11T05:46:59.478Z"}
+{"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T05:47:01.807Z"}

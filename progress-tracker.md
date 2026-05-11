@@ -14,9 +14,17 @@
 - [x] **Story 2.1: Initialize Next.js & UI Library**
 - [x] **Story 2.2: Build the Chat Interface UI**
 - [x] **Story 2.3: Establish SSE Connection**
-- [x] **Story 2.4: Chat History CRUD**
+- [ ] **Story 2.4: Chat History CRUD**
+- [ ] **Story 2.5: Multi-Chat Sidebar & Navigation**
+  - Implement a collapsible sidebar to list, select, and create new conversations.
 
 ## **Epic 3: Core Orchestrator Engine ("Big Boss")**
+...
+## **Epic 6: UI/UX Refinement & Formatting**
+- [ ] **Story 6.1: Markdown & Rich Text Rendering**
+  - Implement react-markdown and syntax highlighting for organized AI responses.
+- [ ] **Story 6.2: Collapsible Sidebar & Mobile Responsiveness**
+
 - [x] **Story 3.1: Gemini Pro Integration**
 - [ ] **Story 3.2: Define MCP-Inspired Zod Schemas**
 - [x] **Story 3.3: Sliding Window Context Management**
