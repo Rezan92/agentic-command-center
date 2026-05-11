@@ -27,7 +27,7 @@ export function MessageInput() {
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && handleSend()}
         disabled={isThinking}
-        className="flex-1"
+        className="flex-1 bg-background border-border"
       />
       <Button 
         size="icon" 
