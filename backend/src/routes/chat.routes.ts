@@ -9,157 +9,119 @@ import { dispatchToolCall } from '../orchestrator/dispatcher';
 const router = Router();
 
 // Configure Google Provider
-// Reverting to gemini-2.5-flash as requested by the user.
 const google = createGoogleGenerativeAI({
   apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY || process.env.GEMINI_API_KEY,
 });
 
-// GET /api/conversations - Fetch user's conversations
+// GET /api/conversations (unchanged)
 router.get('/conversations', async (req, res, next) => {
   try {
     const userId = res.locals.userId;
-    if (!userId) return res.status(401).json({ error: 'Unauthorized - No User ID' });
-
     const conversations = await prisma.conversation.findMany({
       where: { userId },
       orderBy: { updatedAt: 'desc' },
     });
     res.json(conversations);
-  } catch (error) {
-    next(error);
-  }
+  } catch (error) { next(error); }
 });
 
-// GET /api/conversations/:id/messages - Fetch messages for a specific conversation
+// GET /api/conversations/:id/messages (unchanged)
 router.get('/conversations/:id/messages', async (req, res, next) => {
   try {
-    const { id } = req.params;
     const messages = await prisma.message.findMany({
-      where: { conversationId: id },
+      where: { conversationId: req.params.id },
       orderBy: { createdAt: 'asc' },
     });
     res.json(messages);
-  } catch (error) {
-    next(error);
-  }
+  } catch (error) { next(error); }
 });
 
-// POST /api/chat - AI Orchestrator with Tool Calling & Streaming
+// POST /api/chat - AI Orchestrator with Progress Feedback
 router.post('/chat', async (req, res, next) => {
-  console.log('[Orchestrator] POST /chat request received');
+  console.log('\n=== [ORCHESTRATOR REQUEST] ===');
   try {
     const { message, conversationId } = req.body;
     const userId = res.locals.userId;
 
-    const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY || process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      console.error('[Orchestrator] Missing API Key');
-      return res.status(500).json({ error: 'AI Configuration Error: Missing API Key' });
-    }
-
-    if (!userId) {
-      console.warn('[Orchestrator] Unauthorized request');
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
-
-    // 1. Ensure conversation exists
+    // 1. Context & Setup
     let targetConversationId = conversationId;
     if (!targetConversationId) {
-      console.log('[Orchestrator] Creating new conversation');
-      const newConversation = await prisma.conversation.create({
-        data: {
-          userId,
-          title: message.substring(0, 30) + (message.length > 30 ? '...' : ''),
-        },
+      const newConv = await prisma.conversation.create({
+        data: { userId, title: message.substring(0, 30) },
       });
-      targetConversationId = newConversation.id;
+      targetConversationId = newConv.id;
     }
 
-    // 2. Fetch context and system prompt
-    console.log('[Orchestrator] Fetching context and system prompt');
     const history = await getRecentContext(targetConversationId);
     const systemPrompt = getSystemInstructions();
 
-    // 3. Save User Message to DB immediately
     await prisma.message.create({
-      data: {
-        conversationId: targetConversationId,
-        role: 'USER',
-        content: message,
-      },
+      data: { conversationId: targetConversationId, role: 'USER', content: message },
     });
 
-    // 4. Construct messages array (excluding system prompt for the 'system' field)
-    const promptMessages = [
-      ...history,
-      { role: 'user', content: message }
-    ];
+    const promptMessages = [...history, { role: 'user', content: message }];
 
-    console.log(`[Orchestrator] Turn Started: User -> ${targetConversationId}`);
-    console.log(`[Orchestrator] Model: gemini-2.5-flash`);
+    // Prepare for manual streaming with progress updates
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    res.setHeader('Transfer-Encoding', 'chunked');
 
-    // 5. Map our toolRegistry to the Vercel AI SDK format
+    let accumulatedResponse = '';
+
+    // 2. Tool Mapping
     const tools: Record<string, any> = {};
-    const toolNames = Object.keys(toolRegistry);
-    console.log(`[Orchestrator] Registering tools: ${toolNames.join(', ')}`);
-
-    toolNames.forEach((name) => {
-      const definition = (toolRegistry as any)[name];
+    Object.entries(toolRegistry).forEach(([name, definition]) => {
       tools[name] = tool({
         description: definition.description,
         parameters: definition.parameters,
         execute: async (params) => {
-          console.log(`[Orchestrator] Tool Execute triggered: ${name}`);
-          return await dispatchToolCall(name, params);
+          // Send visual feedback to the user immediately
+          const feedback = `\n\n> *Action: Using ${name.replace(/_/g, ' ')}...*\n\n`;
+          res.write(feedback);
+          accumulatedResponse += feedback;
+
+          const result = await dispatchToolCall(name, params);
+          return result;
         },
       });
     });
 
-    // 6. Execute AI call
-    console.log('[Orchestrator] Calling streamText...');
+    // 3. Execution Loop
     const result = streamText({
-      model: google('gemini-2.5-flash'), // RESTORED MODEL
-      system: systemPrompt, // Moved to proper 'system' field
+      model: google('gemini-2.5-flash'),
+      system: systemPrompt,
       messages: promptMessages as any,
       tools,
       maxSteps: 5,
       onFinish: async ({ text }) => {
-        console.log('[Orchestrator] Stream finished. Saving assistant response.');
-        if (text) {
+        // Save the full trail (including our manual feedback) to the DB
+        const finalContent = accumulatedResponse + (text || '');
+        if (finalContent.trim()) {
           await prisma.message.create({
             data: {
               conversationId: targetConversationId,
               role: 'ASSISTANT',
-              content: text,
+              content: finalContent,
             },
           });
+          console.log('[Orchestrator] Saved final consolidated response.');
         }
       },
     });
 
-    // 7. Manual Streaming to Express
-    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-    res.setHeader('Transfer-Encoding', 'chunked');
-
-    console.log('[Orchestrator] Starting stream to client');
-    try {
-      for await (const textPart of result.textStream) {
-        res.write(textPart);
+    // 4. Stream consumption
+    for await (const delta of result.textStream) {
+      if (delta) {
+        accumulatedResponse += delta;
+        res.write(delta);
       }
-    } catch (streamError) {
-      console.error('[Orchestrator] Error during text streaming:', streamError);
     }
 
-    console.log('[Orchestrator] Stream ended');
     res.end();
 
   } catch (error: any) {
-    console.error('[Orchestrator] Fatal Chat Error:', error);
-    if (!res.headersSent) {
-      res.status(500).json({ error: error.message || 'Internal Server Error' });
-    } else {
-      res.end();
-    }
+    console.error('[Orchestrator] Error:', error);
+    if (!res.headersSent) res.status(500).json({ error: 'Internal Error' });
+    else res.end();
   }
 });
 

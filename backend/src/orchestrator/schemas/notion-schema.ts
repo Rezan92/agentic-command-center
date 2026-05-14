@@ -18,7 +18,7 @@ export const readNotionPageSchema = z.object({
  * Notion: Create a new database item or page
  */
 export const createNotionPageSchema = z.object({
-  parentDatabaseId: z.string().describe('The ID of the database where the page should be created.'),
-  properties: z.record(z.any()).describe('The properties of the page (e.g., Name, Date, Status).'),
-  content: z.string().optional().describe('Optional markdown content for the page body.'),
+  parentDatabaseId: z.string().optional().describe('The ID of the database where the page should be created.'),
+  properties: z.record(z.any()).optional().describe('The properties of the page (e.g., Name, Date, Status).'),
+  content: z.string().describe('The markdown content or title for the page.'),
 });
