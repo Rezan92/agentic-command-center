@@ -220,3 +220,51 @@
 {"body":{"conversationId":null,"message":"what are you and what is your job"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-14T04:37:08.104Z"}
 {"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T04:37:09.998Z"}
 {"level":"info","message":"GET /api/conversations/4f7f7d62-629a-48bf-a7c4-1f332ebcfd94/messages","params":{},"query":{},"timestamp":"2026-05-14T04:37:10.221Z"}
+{"level":"info","message":"Backend engine running on http://localhost:3001","timestamp":"2026-05-14T04:54:10.922Z"}
+{"level":"info","message":"Backend engine running on http://localhost:3001","timestamp":"2026-05-14T04:54:16.674Z"}
+{"body":{"conversationId":"4f7f7d62-629a-48bf-a7c4-1f332ebcfd94","message":"Create an event for me"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-14T04:54:58.651Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T04:55:01.641Z"}
+{"body":{"conversationId":"4f7f7d62-629a-48bf-a7c4-1f332ebcfd94","message":"The event is for Doing some handyman work for my client John Mandy next wednsday at 3 pm to 5pm, I need to bring some tools for it specialy the pumping tools"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-14T04:56:57.493Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T04:57:00.437Z"}
+{"body":{"conversationId":"4f7f7d62-629a-48bf-a7c4-1f332ebcfd94","message":"it's may 24, 2026"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-14T04:57:46.823Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T04:57:49.399Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T04:58:54.027Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T04:58:54.495Z"}
+{"level":"info","message":"GET /api/conversations/4f7f7d62-629a-48bf-a7c4-1f332ebcfd94/messages","params":{},"query":{},"timestamp":"2026-05-14T04:58:54.498Z"}
+{"level":"info","message":"GET /api/conversations/4f7f7d62-629a-48bf-a7c4-1f332ebcfd94/messages","params":{},"query":{},"timestamp":"2026-05-14T04:58:54.903Z"}
+{"body":{"conversationId":"4f7f7d62-629a-48bf-a7c4-1f332ebcfd94","message":"did you do it"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-14T04:59:08.333Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T04:59:10.997Z"}
+{"body":{"conversationId":null,"message":"Are you here"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-14T04:59:59.829Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T05:00:01.873Z"}
+{"level":"info","message":"GET /api/conversations/d9ab03f6-68dd-4229-a6d1-1216c82bc4b9/messages","params":{},"query":{},"timestamp":"2026-05-14T05:00:02.135Z"}
+{"level":"info","message":"Backend engine running on http://localhost:3001","timestamp":"2026-05-14T05:08:19.748Z"}
+{"level":"info","message":"Backend engine running on http://localhost:3001","timestamp":"2026-05-14T05:08:25.669Z"}
+{"body":{"conversationId":"d9ab03f6-68dd-4229-a6d1-1216c82bc4b9","message":"Add to my calendar for next Wednesday, plumbing fix for John at 2 p.m., no end date or time. And in the description, say, take your tools with you, don't forget those tools. And add notification reminders, like one hour before the event and one day before the event, so two notification reminders."},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-14T05:10:13.070Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T05:10:17.397Z"}
+{"body":{"conversationId":"d9ab03f6-68dd-4229-a6d1-1216c82bc4b9","message":"what heppen  do it"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-14T05:10:36.910Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T05:10:40.371Z"}
+{"body":{"conversationId":null,"message":"Book a meeting for next Wednesday at   2pm called 'Project Sync'"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-14T05:11:35.678Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T05:11:38.602Z"}
+{"level":"info","message":"GET /api/conversations/35cb0c78-0d89-4280-b459-7bcb69166d2e/messages","params":{},"query":{},"timestamp":"2026-05-14T05:11:38.810Z"}
+{"level":"info","message":"Backend engine running on http://localhost:3001","timestamp":"2026-05-14T05:13:45.958Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T05:14:27.040Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T05:14:27.701Z"}
+{"level":"info","message":"GET /api/conversations/35cb0c78-0d89-4280-b459-7bcb69166d2e/messages","params":{},"query":{},"timestamp":"2026-05-14T05:14:27.705Z"}
+{"level":"info","message":"GET /api/conversations/35cb0c78-0d89-4280-b459-7bcb69166d2e/messages","params":{},"query":{},"timestamp":"2026-05-14T05:14:28.121Z"}
+{"body":{"conversationId":null,"message":"Book a meeting for next Wednesday at   2pm called 'Project Sync'"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-14T05:14:41.313Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T05:14:42.189Z"}
+{"level":"info","message":"GET /api/conversations/69ffd8ee-7568-4f0a-bf79-bd2ee39a8d73/messages","params":{},"query":{},"timestamp":"2026-05-14T05:14:42.390Z"}
+{"body":{"conversationId":null,"message":"are you here"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-14T05:15:00.487Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T05:15:01.109Z"}
+{"level":"info","message":"GET /api/conversations/74b230c5-2f49-4ebd-9d3e-c08828aeb5b1/messages","params":{},"query":{},"timestamp":"2026-05-14T05:15:01.314Z"}
+{"level":"info","message":"Backend engine running on http://localhost:3001","timestamp":"2026-05-14T05:20:29.720Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T05:21:02.095Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T05:21:02.739Z"}
+{"level":"info","message":"GET /api/conversations/74b230c5-2f49-4ebd-9d3e-c08828aeb5b1/messages","params":{},"query":{},"timestamp":"2026-05-14T05:21:02.743Z"}
+{"level":"info","message":"GET /api/conversations/74b230c5-2f49-4ebd-9d3e-c08828aeb5b1/messages","params":{},"query":{},"timestamp":"2026-05-14T05:21:03.121Z"}
+{"body":{"conversationId":null,"message":"ook a meeting for next Wednesday at 2 p.m.   called Project Sync."},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-14T05:21:09.985Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T05:21:12.471Z"}
+{"level":"info","message":"GET /api/conversations/432f2696-c008-4d5a-a945-0e6fa1ea54ed/messages","params":{},"query":{},"timestamp":"2026-05-14T05:21:12.688Z"}
+{"body":{"conversationId":null,"message":"are you here dude"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-14T05:21:55.109Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T05:21:56.520Z"}
+{"level":"info","message":"GET /api/conversations/cfa1478d-69e3-4a81-941e-b9e4b751b346/messages","params":{},"query":{},"timestamp":"2026-05-14T05:21:56.729Z"}

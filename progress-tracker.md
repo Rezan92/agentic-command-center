@@ -25,9 +25,9 @@
 ## **Epic 3: The Tooling Layer (The MCP Protocol)**
 - [x] **Story 3.1: Define Core Zod Schemas**
   - Create centralized JSON definitions for Notion and Calendar commands.
-- [ ] **Story 3.2: Orchestrator Tool Integration**
+- [x] **Story 3.2: Orchestrator Tool Integration**
   - Update Gemini logic to trigger tool calls instead of just text.
-- [ ] **Story 3.3: Mock Worker Responses**
+- [x] **Story 3.3: Mock Worker Responses**
   - Create "Dry Run" workers to test the loop without real API keys.
 
 ## **Epic 4: Integration Management & OAuth**

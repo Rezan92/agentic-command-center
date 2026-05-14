@@ -8,15 +8,21 @@ export interface ChatMessage {
 }
 
 /**
- * Fetches the system instructions from the prompts directory.
+ * Fetches the system instructions from the prompts directory and injects dynamic context.
  */
 export function getSystemInstructions(): string {
   try {
     const filePath = path.join(process.cwd(), 'src/prompts/supervisor.md');
-    return fs.readFileSync(filePath, 'utf8');
+    let content = fs.readFileSync(filePath, 'utf8');
+
+    // Inject Current Date/Time for context-aware relative dates (e.g. "Next Wednesday")
+    const now = new Date();
+    const dateContext = `\n\n## Current Context\n- Current Time: ${now.toISOString()}\n- Today is: ${now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}\n`;
+    
+    return content + dateContext;
   } catch (error) {
     console.error('Failed to read system instructions:', error);
-    return 'You are a helpful AI assistant.';
+    return `You are a helpful AI assistant. Current Time: ${new Date().toISOString()}`;
   }
 }
 
