@@ -1,80 +1,59 @@
 # **Product Backlog: Agentic Command Center**
 
-This backlog is organized sequentially. Each epic builds the necessary foundation for the next, ensuring we don't build the UI before the APIs can support it, and we don't build the AI before the data layer exists.
+This backlog is organized sequentially. Each epic builds the necessary foundation for the next.
 
-## **Epic 1: Backend Foundation & Data Layer**
+## **Epic 1: Backend Foundation & Data Layer (COMPLETE)**
+- Story 1.1: Initialize Express Server
+- Story 1.2: Database Provisioning & Prisma Setup
+- Story 1.3: Hardcoded MVP Authentication
+- Story 1.4: Structured Logging Setup
 
-*Goal: Stand up the core Express server and PostgreSQL database using the defined Prisma schema.*
+## **Epic 2: Frontend Shell & Multi-Chat (COMPLETE)**
+- Story 2.1: Initialize Next.js & UI Library
+- Story 2.2: Build the Chat Interface UI
+- Story 2.3: Establish DB Persistence
+- Story 2.4: Chat History CRUD
+- Story 2.5: Multi-Chat Sidebar & Navigation
 
-* **Story 1.1: Initialize Express Server**  
-  * *Description:* Setup the Node.js/Express repository with TypeScript, basic routing, and CORS configured to accept requests from the future Next.js frontend.  
-* **Story 1.2: Database Provisioning & Prisma Setup**  
-  * *Description:* Spin up a local PostgreSQL instance (with pgvector enabled), initialize Prisma, and apply the schema.prisma file to create the tables (User, OAuthConnection, Conversation, Message, MemoryEmbedding).  
-* **Story 1.3: Hardcoded MVP Authentication**  
-  * *Description:* Create a simple middleware to bypass full auth for MVP, automatically assigning requests to a seeded User ID in the database so foreign key relations work.  
-* **Story 1.4: Structured Logging Setup**  
-  * *Description:* Implement a logger (e.g., Winston) to record all incoming API requests and upcoming AI tool executions for easier debugging.
+## **Epic 3: The Tooling Layer (The MCP Protocol)**
+*Goal: Teach the Orchestrator how to identify intent and output structured JSON commands.*
 
-## **Epic 2: Frontend Shell & Real-Time Comms**
+* **Story 3.1: Define Core Zod Schemas (The MCP Protocol)**
+  * *Description:* Create a centralized folder defining exactly what commands the AI can issue. This is our strict contract to prevent hallucinations.
+  * *Deliverables:*
+    * `notion-schema.ts`: Define `search_pages`, `read_page`, and `update_database_item`.
+    * `calendar-schema.ts`: Define `find_event`, `create_event`, and `delete_event`.
+    * Centralized registration so the Orchestrator can load these tools dynamically.
+* **Story 3.2: Orchestrator Tool Integration**
+  * *Description:* Update the Gemini loop to recognize tools. When a user says "Book a meeting," the AI must return a tool-call JSON, not just text.
+* **Story 3.3: Mock Worker Responses**
+  * *Description:* Implement "dry run" workers that return success messages so we can test the logic without real APIs.
 
-*Goal: Build the Next.js chat interface and connect it to the Express backend using Server-Sent Events (SSE).*
+## **Epic 4: Integration Management & OAuth**
+*Goal: Provide a secure way for users to grant the app permission to their tools.*
 
-* **Story 2.1: Initialize Next.js & UI Library**  
-  * *Description:* Setup Next.js (App Router), Tailwind CSS v4, and install shadcn/ui. Create the base layout.  
-* **Story 2.2: Build the Chat Interface UI**  
-  * *Description:* Create the input bar, message history view, and wire up Zustand for local state management.  
-* **Story 2.3: Establish SSE Connection**  
-  * *Description:* Create an Express endpoint that opens a Server-Sent Events (SSE) stream. Configure the Next.js frontend to listen to this stream to receive real-time updates.  
-* **Story 2.4: Chat History CRUD**  
-  * *Description:* Create Express REST endpoints to fetch previous Conversation and Message records from Postgres, and render them in the Next.js UI on load.
-* **Story 2.5: Multi-Chat Sidebar & Navigation**
-  * *Description:* Implement a collapsible sidebar to list, select, and create new conversations, allowing the user to maintain separate contexts.
+* **Story 4.1: Integrations UI (Settings)**
+  - Add a "Connections" tab to the Settings menu to track Google/Notion link status.
+* **Story 4.2: OAuth 2.0 Backend Flow**
+  - Implement the secure token storage flow for Google and Notion.
 
-## **Epic 3: Core Orchestrator Engine ("Big Boss")**
-...
-## **Epic 6: UI/UX Refinement & Formatting**
+## **Epic 5: Worker Agents (The Hands)**
+*Goal: Connect the structured JSON commands to real API calls.*
 
-*Goal: Improve the visual presentation of AI responses and general interface polish.*
+* **Story 5.1: Google Calendar Agent**
+  - Build the service that maps Gemini's JSON -> Google Calendar API.
+* **Story 5.2: Notion Agent**
+  - Build the service for Search, Page Reading, and Database updates.
 
-* **Story 6.1: Markdown & Rich Text Rendering**
-  * *Description:* Implement react-markdown on the frontend to render lists, bold text, and code blocks in an organized, visually appealing format.
-* **Story 6.2: Response Organization**
-  * *Description:* Refine the AI's instruction set to ensure it uses structured Markdown (headers, bullet points) for complex answers.
+## **Epic 6: UI/UX Refinement (COMPLETE)**
+- Story 6.1: Markdown & Rich Text Rendering
+- Story 6.2: Dark Mode & Theme Provider
+- Story 6.3: Custom Typography (Google Sans Flex)
 
+## **Epic 7: Safety & The "Glass Engine"**
+*Goal: Observability and user control.*
 
-*Goal: Integrate Gemini 1.5 Pro and define the strict communication protocol.*
-
-* **Story 3.1: Gemini Pro Integration**  
-  * *Description:* Install the Vercel AI SDK on the Express backend and configure the Gemini 1.5 Pro model to receive user chat inputs and stream text back via SSE.  
-* **Story 3.2: Define MCP-Inspired Zod Schemas**  
-  * *Description:* Write the strict Zod schemas for the Calendar\_Agent and Notion\_Agent tools so the Orchestrator knows exactly what JSON format to output.  
-* **Story 3.3: Sliding Window Context Management**  
-  * *Description:* Write logic before the LLM call to only fetch the last 10 Message records for the active context window, preventing token bloat.  
-* **Story 3.4: Task-Result Compaction**  
-  * *Description:* Create a utility function that takes a large JSON response from an agent and asks a lightweight Gemini model to summarize it before passing it back to the Orchestrator's memory.
-
-## **Epic 4: Worker Agent Integrations ("Little Employees")**
-
-*Goal: Give the Orchestrator actual tools to use by integrating Gemini 1.5 Flash with external APIs.*
-
-* **Story 4.1: Google OAuth Flow**  
-  * *Description:* Implement the Google OAuth 2.0 flow and save the accessToken, refreshToken, and expiresAt into the OAuthConnection table.  
-* **Story 4.2: Google Calendar Worker Agent**  
-  * *Description:* Create the isolated Gemini Flash script that takes the Orchestrator's Zod JSON, hits the Google Calendar API (Find, Create, Update), and returns a standardized JSON response.  
-* **Story 4.3: Notion OAuth Flow**  
-  * *Description:* Implement the Notion Integration/OAuth flow and securely save the token into the OAuthConnection table.  
-* **Story 4.4: Notion Worker Agent**  
-  * *Description:* Create the Gemini Flash script to handle global Notion search, reading pages, and creating new database items based on the Orchestrator's commands.
-
-## **Epic 5: Safety, UX Polish, & Observability**
-
-*Goal: Add the "Glass Engine" UI components, error handling, and Human-in-the-Loop safety checks.*
-
-* **Story 5.1: Agentic Breadcrumbs UI**  
-  * *Description:* Update the Next.js UI to listen for custom SSE events (e.g., "Routing to Notion") and render a dynamic stepper/terminal UI above the chat message.  
-* **Story 5.2: HITL (Human-in-the-Loop) Modals**  
-  * *Description:* If the Orchestrator outputs a "Delete" or "Move" intent, halt the backend loop, send a "Confirmation Required" event to the frontend, and render an Approve/Deny modal.  
-* **Story 5.3: Token Refresh & Graceful Failures**  
-  * *Description:* Add logic to the Workers to check expiresAt in the DB before an API call. If a 401 occurs, catch the error, halt the loop, and ask the user to re-authenticate via the UI.  
-* **Story 5.4: Long-term Vector Memory (pgvector)**  
-  * *Description:* Create a background worker that takes conversations older than 10 turns, generates an embedding summary using Gemini, and saves it to the MemoryEmbedding table for semantic retrieval.
+* **Story 7.1: Agentic Breadcrumbs**
+  - Visualize the "Thinking -> Routing -> Executing" steps in the UI.
+* **Story 7.2: Human-in-the-Loop (HITL)**
+  - Implement "Confirm/Deny" buttons for data-modifying actions.

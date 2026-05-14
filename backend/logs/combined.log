@@ -209,3 +209,14 @@
 {"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T06:35:16.339Z"}
 {"level":"info","message":"GET /api/conversations/2011147b-65e2-4f82-b122-2a6e54a7d72f/messages","params":{},"query":{},"timestamp":"2026-05-11T06:35:20.388Z"}
 {"level":"info","message":"GET /api/conversations/4436d98d-2232-4b1e-bf29-2cd6fdad1d14/messages","params":{},"query":{},"timestamp":"2026-05-11T06:35:23.778Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T04:19:21.599Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T04:19:22.224Z"}
+{"level":"info","message":"GET /api/conversations/2011147b-65e2-4f82-b122-2a6e54a7d72f/messages","params":{},"query":{},"timestamp":"2026-05-14T04:19:22.228Z"}
+{"level":"info","message":"GET /api/conversations/2011147b-65e2-4f82-b122-2a6e54a7d72f/messages","params":{},"query":{},"timestamp":"2026-05-14T04:19:22.677Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T04:36:50.577Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T04:36:51.080Z"}
+{"level":"info","message":"GET /api/conversations/2011147b-65e2-4f82-b122-2a6e54a7d72f/messages","params":{},"query":{},"timestamp":"2026-05-14T04:36:51.085Z"}
+{"level":"info","message":"GET /api/conversations/2011147b-65e2-4f82-b122-2a6e54a7d72f/messages","params":{},"query":{},"timestamp":"2026-05-14T04:36:51.483Z"}
+{"body":{"conversationId":null,"message":"what are you and what is your job"},"level":"info","message":"POST /api/chat","params":{},"query":{},"timestamp":"2026-05-14T04:37:08.104Z"}
+{"level":"info","message":"GET /api/conversations","params":{},"query":{},"timestamp":"2026-05-14T04:37:09.998Z"}
+{"level":"info","message":"GET /api/conversations/4f7f7d62-629a-48bf-a7c4-1f332ebcfd94/messages","params":{},"query":{},"timestamp":"2026-05-14T04:37:10.221Z"}
