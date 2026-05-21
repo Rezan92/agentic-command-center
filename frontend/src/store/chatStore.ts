@@ -31,6 +31,8 @@ interface ChatState {
   fetchConnections: () => Promise<void>;
   startNewChat: () => void;
   sendMessage: (content: string) => Promise<void>;
+  deleteConversation: (id: string) => Promise<void>;
+  updateConversationTitle: (id: string, title: string) => Promise<void>;
   setThinking: (thinking: boolean) => void;
 }
 
@@ -86,6 +88,39 @@ export const useChatStore = create<ChatState>((set, get) => ({
 
   startNewChat: () => {
     set({ messages: [], conversationId: null });
+  },
+
+  deleteConversation: async (id: string) => {
+    try {
+      const res = await fetch(`${API_URL}/conversations/${id}`, {
+        method: 'DELETE',
+      });
+      if (!res.ok) throw new Error('Failed to delete conversation');
+      
+      const { conversationId } = get();
+      if (conversationId === id) {
+        set({ conversationId: null, messages: [] });
+      }
+      
+      await get().fetchConversations();
+    } catch (error) {
+      console.error('Delete conversation error:', error);
+    }
+  },
+
+  updateConversationTitle: async (id: string, title: string) => {
+    try {
+      const res = await fetch(`${API_URL}/conversations/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title }),
+      });
+      if (!res.ok) throw new Error('Failed to update conversation title');
+      
+      await get().fetchConversations();
+    } catch (error) {
+      console.error('Update title error:', error);
+    }
   },
 
   sendMessage: async (content) => {

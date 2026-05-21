@@ -25,7 +25,7 @@ router.get('/conversations', async (req, res, next) => {
   } catch (error) { next(error); }
 });
 
-// GET /api/conversations/:id/messages (unchanged)
+// GET /api/conversations/:id/messages
 router.get('/conversations/:id/messages', async (req, res, next) => {
   try {
     const messages = await prisma.message.findMany({
@@ -33,6 +33,37 @@ router.get('/conversations/:id/messages', async (req, res, next) => {
       orderBy: { createdAt: 'asc' },
     });
     res.json(messages);
+  } catch (error) { next(error); }
+});
+
+// PATCH /api/conversations/:id - Update conversation title
+router.patch('/conversations/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { title } = req.body;
+    const userId = res.locals.userId;
+
+    const conversation = await prisma.conversation.updateMany({
+      where: { id, userId },
+      data: { title },
+    });
+
+    res.json({ success: true, updated: conversation.count });
+  } catch (error) { next(error); }
+});
+
+// DELETE /api/conversations/:id - Delete a conversation
+router.delete('/conversations/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const userId = res.locals.userId;
+
+    // Delete directly (Prisma onDelete: Cascade will handle messages)
+    await prisma.conversation.delete({
+      where: { id, userId },
+    });
+
+    res.json({ success: true });
   } catch (error) { next(error); }
 });
 
