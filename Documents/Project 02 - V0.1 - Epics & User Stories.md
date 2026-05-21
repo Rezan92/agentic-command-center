@@ -32,10 +32,14 @@ This backlog is organized sequentially. Each epic builds the necessary foundatio
 ## **Epic 4: Integration Management & OAuth**
 *Goal: Provide a secure way for users to grant the app permission to their tools.*
 
-* **Story 4.1: Integrations UI (Settings)**
-  - Add a "Connections" tab to the Settings menu to track Google/Notion link status.
-* **Story 4.2: OAuth 2.0 Backend Flow**
-  - Implement the secure token storage flow for Google and Notion.
+* **Story 4.1: Integrations UI (Settings Dashboard)**
+  * *Description:* Create a "Connections" tab in the Settings modal/sidebar. Show cards for "Google Calendar" and "Notion" with "Connect" buttons and "Connected/Disconnected" status indicators.
+* **Story 4.2: OAuth 2.0 Backend Core**
+  * *Description:* Implement the `/api/auth/:provider` and `/api/auth/:provider/callback` routes. Use `google-auth-library` and official Notion auth patterns.
+* **Story 4.3: Secure Token Management**
+  * *Description:* Update the logic to save `accessToken`, `refreshToken`, and `expiresAt` into the `OAuthConnection` table. Implement a `refreshAccessToken` utility.
+* **Story 4.4: Dynamic Tool Availability**
+  * *Description:* Update the Orchestrator to only "show" tools to Gemini if the user has an active connection for that provider.
 
 ## **Epic 5: Worker Agents (The Hands)**
 *Goal: Connect the structured JSON commands to real API calls.*

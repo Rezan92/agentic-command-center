@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import orchestratorRoutes from './routes/orchestrator';
 import chatRoutes from './routes/chat.routes';
+import authRoutes from './routes/auth.routes';
 import { requestLogger } from './middleware/logger';
 import { errorHandler } from './middleware/errorHandler';
 import { mvpAuth } from './middleware/mvpAuth';
@@ -23,6 +24,7 @@ app.use(mvpAuth);
 
 // 3. Routes
 app.use('/api/orchestrator', orchestratorRoutes);
+app.use('/api/auth', authRoutes);
 app.use('/api', chatRoutes);
 
 app.get('/health', (req, res) => {

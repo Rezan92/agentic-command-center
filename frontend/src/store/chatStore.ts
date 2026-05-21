@@ -13,15 +13,22 @@ export interface Conversation {
   updatedAt: string;
 }
 
+export interface Connection {
+  provider: 'GOOGLE' | 'NOTION';
+  isConnected: boolean;
+}
+
 interface ChatState {
   messages: Message[];
   conversations: Conversation[];
   conversationId: string | null;
+  connections: Connection[];
   isThinking: boolean;
   
   // Actions
   fetchConversations: () => Promise<void>;
   fetchMessages: (id: string) => Promise<void>;
+  fetchConnections: () => Promise<void>;
   startNewChat: () => void;
   sendMessage: (content: string) => Promise<void>;
   setThinking: (thinking: boolean) => void;
@@ -33,6 +40,10 @@ export const useChatStore = create<ChatState>((set, get) => ({
   messages: [],
   conversations: [],
   conversationId: null,
+  connections: [
+    { provider: 'GOOGLE', isConnected: false },
+    { provider: 'NOTION', isConnected: false },
+  ],
   isThinking: false,
 
   fetchConversations: async () => {
@@ -59,6 +70,17 @@ export const useChatStore = create<ChatState>((set, get) => ({
       set({ messages, conversationId: id });
     } catch (error) {
       console.error('Fetch messages error:', error);
+    }
+  },
+
+  fetchConnections: async () => {
+    try {
+      const res = await fetch(`${API_URL}/auth/status`);
+      if (!res.ok) throw new Error('Failed to fetch connections');
+      const data = await res.json();
+      set({ connections: data });
+    } catch (error) {
+      console.error('Fetch connections error:', error);
     }
   },
 

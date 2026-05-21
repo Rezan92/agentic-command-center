@@ -22,17 +22,20 @@
 
 ## **UPCOMING: THE AGENTIC PHASE**
 
-## **Epic 3: The Tooling Layer (The MCP Protocol)**
+## **Epic 3: The Tooling Layer (The MCP Protocol) (100%)**
 - [x] **Story 3.1: Define Core Zod Schemas**
-  - Create centralized JSON definitions for Notion and Calendar commands.
 - [x] **Story 3.2: Orchestrator Tool Integration**
-  - Update Gemini logic to trigger tool calls instead of just text.
 - [x] **Story 3.3: Mock Worker Responses**
-  - Create "Dry Run" workers to test the loop without real API keys.
+
+---
+
+## **CURRENT FOCUS: REAL-WORLD INTEGRATION**
 
 ## **Epic 4: Integration Management & OAuth**
-- [ ] **Story 4.1: Integrations UI (Settings)**
-- [ ] **Story 4.2: OAuth 2.0 Backend Flow**
+- [x] **Story 4.1: Integrations UI (Settings Dashboard)**
+- [x] **Story 4.2: OAuth 2.0 Backend Core**
+- [ ] **Story 4.3: Secure Token Management**
+- [ ] **Story 4.4: Dynamic Tool Availability**
 
 ## **Epic 5: Worker Agents (The Hands)**
 - [ ] **Story 5.1: Google Calendar Agent Implementation**

@@ -19,11 +19,13 @@ import {
   DropdownMenuPortal,
   DropdownMenuSubContent,
 } from "@/components/ui/dropdown-menu";
+import { SettingsDialog } from "./SettingsDialog";
 
 export function Sidebar() {
   const { conversations, conversationId, fetchConversations, fetchMessages, startNewChat } = useChatStore();
   const { setTheme, theme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -112,6 +114,14 @@ export function Sidebar() {
             <div className="px-2 py-2 text-sm font-bold text-foreground">User Settings</div>
             <DropdownMenuSeparator />
             
+            <DropdownMenuItem 
+              onClick={() => setSettingsOpen(true)}
+              className="flex items-center gap-2 px-2 py-1.5 text-sm outline-none focus:bg-accent rounded-sm cursor-pointer font-medium"
+            >
+              <Settings className="h-4 w-4 text-muted-foreground" />
+              <span>Integrations</span>
+            </DropdownMenuItem>
+
             <DropdownMenuSub>
               <DropdownMenuSubTrigger className="flex items-center gap-2 px-2 py-1.5 text-sm outline-none focus:bg-accent rounded-sm cursor-default">
                 <Palette className="h-4 w-4" />
@@ -144,6 +154,8 @@ export function Sidebar() {
             </div>
           </DropdownMenuContent>
         </DropdownMenu>
+
+        <SettingsDialog open={settingsOpen} onOpenChange={setSettingsOpen} />
       </div>
     </div>
   );
