@@ -36,7 +36,7 @@ router.get('/conversations/:id/messages', async (req, res, next) => {
   } catch (error) { next(error); }
 });
 
-// POST /api/chat - AI Orchestrator with Progress Feedback
+// POST /api/chat - AI Orchestrator with Multi-Step Debugging
 router.post('/chat', async (req, res, next) => {
   console.log('\n=== [ORCHESTRATOR REQUEST] ===');
   try {
@@ -61,40 +61,48 @@ router.post('/chat', async (req, res, next) => {
 
     const promptMessages = [...history, { role: 'user', content: message }];
 
-    // Prepare for manual streaming with progress updates
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.setHeader('Transfer-Encoding', 'chunked');
 
     let accumulatedResponse = '';
 
-    // 2. Tool Mapping
+    // 2. Tool Mapping with Step-Level Debugging
     const tools: Record<string, any> = {};
     Object.entries(toolRegistry).forEach(([name, definition]) => {
       tools[name] = tool({
         description: definition.description,
         parameters: definition.parameters,
         execute: async (params) => {
-          // Send visual feedback to the user immediately
+          console.log(`[Tool] Starting: ${name}`);
+          // Send visual feedback immediately
           const feedback = `\n\n> *Action: Using ${name.replace(/_/g, ' ')}...*\n\n`;
           res.write(feedback);
           accumulatedResponse += feedback;
 
           const result = await dispatchToolCall(name, params);
+          console.log(`[Tool] Result for ${name}:`, JSON.stringify(result).substring(0, 50) + '...');
           return result;
         },
       });
     });
 
-    // 3. Execution Loop
+    // 3. Execution Loop with Explicit Multi-Step Logging
     const result = streamText({
       model: google('gemini-2.5-flash'),
       system: systemPrompt,
       messages: promptMessages as any,
       tools,
       maxSteps: 5,
+      onStepFinish: ({ text, toolCalls, toolResults, finishReason }) => {
+        console.log(`[Step Finish] Reason: ${finishReason}, Tools: ${toolCalls?.length || 0}, Text length: ${text?.length || 0}`);
+        if (toolResults && toolResults.length > 0) {
+          console.log(`[Step Finish] Results found: ${toolResults.length}`);
+        }
+      },
       onFinish: async ({ text }) => {
-        // Save the full trail (including our manual feedback) to the DB
         const finalContent = accumulatedResponse + (text || '');
+        console.log(`[Finish] Final text length: ${text?.length || 0}. Total accumulated: ${finalContent.length}`);
+        
         if (finalContent.trim()) {
           await prisma.message.create({
             data: {
@@ -103,12 +111,13 @@ router.post('/chat', async (req, res, next) => {
               content: finalContent,
             },
           });
-          console.log('[Orchestrator] Saved final consolidated response.');
+          console.log('[Finish] Saved to DB.');
         }
       },
     });
 
     // 4. Stream consumption
+    console.log('[Stream] Starting loop...');
     for await (const delta of result.textStream) {
       if (delta) {
         accumulatedResponse += delta;
@@ -116,6 +125,7 @@ router.post('/chat', async (req, res, next) => {
       }
     }
 
+    console.log('[Stream] Loop ended.');
     res.end();
 
   } catch (error: any) {
